@@ -1,1 +1,1 @@
-﻿This is a rogulike game learning project
+﻿This is a roguelike game learning project
