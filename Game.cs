@@ -37,7 +37,7 @@ namespace TestRL
 
         static void Main(string[] args)
         {
-            rootConsole = new RLRootConsole("terminal8x8.png", rootWidth, rootHeigth, 8, 8, 1f, "TestRL");
+            rootConsole = new RLRootConsole("cheepicus12x12.png", rootWidth, rootHeigth, 12, 12, 1f, "TestRL");
 
             rootConsole.Update += OnRootConsoleUpdate;
             rootConsole.Render += OnRootConsoleRender;
