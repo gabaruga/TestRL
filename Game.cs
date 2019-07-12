@@ -48,7 +48,7 @@ namespace TestRL
             statsConsole = new RLConsole(statsWidth, statsHeigth);
 
             MapGenerator mapGenerator = new MapGenerator(mapWidth, mapHeigth);
-            dungeonMap = mapGenerator.CreateMap();
+            dungeonMap = mapGenerator.CreateCave();
 
             rootConsole.Run();
         }

@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 using RogueSharp;
 using RLNET;
+using RogueSharp.MapCreation;
 
 namespace TestRL.Core
 {
-    class DungeonMap : Map
+    class DungeonMap : Map, IMap
     {
         public void Draw( RLConsole mapConsole)
         {
@@ -47,6 +48,6 @@ namespace TestRL.Core
                     console.Set(cell.X, cell.Y, RLColor.Gray, RLColor.Black, '#');
                 }
             }
-        }
+        }       
     }
 }
