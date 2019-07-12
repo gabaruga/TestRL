@@ -34,6 +34,7 @@ namespace TestRL
         #endregion
 
         public static DungeonMap dungeonMap;
+        public static Player player;
 
         static void Main(string[] args)
         {
@@ -47,14 +48,6 @@ namespace TestRL
             logConsole = new RLConsole(logWidth, logHeigth);
             statsConsole = new RLConsole(statsWidth, statsHeigth);
 
-            MapGenerator mapGenerator = new MapGenerator(mapWidth, mapHeigth);
-            dungeonMap = mapGenerator.CreateRooms();
-
-            rootConsole.Run();
-        }
-
-        private static void OnRootConsoleUpdate(object sender, UpdateEventArgs e)
-        {
             mapConsole.SetBackColor(0, 0, mapWidth, mapHeigth, RLColor.Black);
             //mapConsole.Print(1, 1, "Map", RLColor.White);
 
@@ -66,6 +59,20 @@ namespace TestRL
 
             statsConsole.SetBackColor(0, 0, statsWidth, statsHeigth, RLColor.Cyan);
             statsConsole.Print(1, 1, "Stats", RLColor.White);
+
+            MapGenerator mapGenerator = new MapGenerator(mapWidth, mapHeigth);
+            dungeonMap = mapGenerator.CreateCave();
+
+            player = new Player();
+
+            dungeonMap.UpdateFOV(player);
+
+            rootConsole.Run();
+        }
+
+        private static void OnRootConsoleUpdate(object sender, UpdateEventArgs e)
+        {
+            
         }
 
         private static void OnRootConsoleRender(object sender, UpdateEventArgs e)
@@ -76,8 +83,8 @@ namespace TestRL
             RLConsole.Blit(statsConsole, 0, 0, statsWidth, statsHeigth, rootConsole, mapWidth, inventoryHeigth);
             
             dungeonMap.Draw(mapConsole);
+            player.Draw(mapConsole, dungeonMap);
             rootConsole.Draw();
-
         }
     }
 }

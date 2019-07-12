@@ -49,5 +49,15 @@ namespace TestRL.Core
                 }
             }
         }       
+
+        public void UpdateFOV(Player player)
+        {
+            ComputeFov(player.X, player.Y, player.fov_distance, true);
+
+            foreach (Cell cell in GetAllCells())
+            {
+                SetCellProperties(cell.X, cell.Y, cell.IsTransparent, cell.IsWalkable, true);
+            }
+        }
     }
 }
