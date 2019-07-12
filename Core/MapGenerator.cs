@@ -58,5 +58,21 @@ namespace TestRL.Core
 
             return map;
         }
+
+        public DungeonMap CreateRooms()
+        {
+            map.Initialize(width, heigth);
+
+            IMapCreationStrategy<Map> strategy = new RandomRoomsMapCreationStrategy<Map>(width, heigth, 35, 20, 5);
+
+            map.Copy(strategy.CreateMap());
+
+            foreach (Cell cell in map.GetAllCells())
+            {
+                map.SetCellProperties(cell.X, cell.Y, cell.IsTransparent, cell.IsWalkable, true);
+            }
+
+            return map;
+        }
     }
 }
