@@ -53,11 +53,28 @@ namespace TestRL.Core
         public void UpdateFOV(Player player)
         {
             ComputeFov(player.X, player.Y, player.fov_distance, true);
-
+            
             foreach (Cell cell in GetAllCells())
             {
-                SetCellProperties(cell.X, cell.Y, cell.IsTransparent, cell.IsWalkable, true);
+                if (IsInFov(cell.X, cell.Y))
+                    SetCellProperties(cell.X, cell.Y, cell.IsTransparent, cell.IsWalkable, true);
             }
+            
+        }
+
+        public bool SetActorPosition(ref Player player, int x, int y)
+        {
+            if (GetCell(x,y).IsWalkable)
+            {
+                player.X = x;
+                player.Y = y;
+
+                UpdateFOV(player);
+
+                return true;
+            }
+
+            return false;
         }
     }
 }

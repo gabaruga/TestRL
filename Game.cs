@@ -35,6 +35,7 @@ namespace TestRL
 
         public static DungeonMap dungeonMap;
         public static Player player;
+        public static Command cmd;
 
         static void Main(string[] args)
         {
@@ -61,7 +62,9 @@ namespace TestRL
             statsConsole.Print(1, 1, "Stats", RLColor.White);
 
             MapGenerator mapGenerator = new MapGenerator(mapWidth, mapHeigth);
-            dungeonMap = mapGenerator.CreateCave();
+            dungeonMap = mapGenerator.CreateCave(false);
+
+            cmd = new Command();
 
             player = new Player();
 
@@ -72,7 +75,10 @@ namespace TestRL
 
         private static void OnRootConsoleUpdate(object sender, UpdateEventArgs e)
         {
-            
+            RLKeyPress keyPress = rootConsole.Keyboard.GetKeyPress();
+
+            if (keyPress != null)
+                cmd.MovePlayer(player, dungeonMap, keyPress.Key);
         }
 
         private static void OnRootConsoleRender(object sender, UpdateEventArgs e)

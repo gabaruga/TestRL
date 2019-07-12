@@ -43,19 +43,19 @@ namespace TestRL.Core
             return map;
         }
 
-        public DungeonMap CreateCave()
+        public DungeonMap CreateCave(bool explored)
         {
             map.Initialize(width, heigth);
 
             IMapCreationStrategy<Map> strategy = new CaveMapCreationStrategy<Map>(width, heigth, 48, 3, 1);
 
             map.Copy(strategy.CreateMap());
-            
+                        
             foreach (Cell cell in map.GetAllCells())
             {
-                map.SetCellProperties(cell.X, cell.Y, cell.IsTransparent, cell.IsWalkable, true);
-            }
-
+                map.SetCellProperties(cell.X, cell.Y, cell.IsTransparent, cell.IsWalkable, explored);
+            }            
+            
             return map;
         }
 
