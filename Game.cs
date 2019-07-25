@@ -16,7 +16,7 @@ namespace TestRL
         private static readonly int  rootWidth = 120;
         private static readonly int  rootHeigth = 70;
 
-        private static RLConsole mapConsole;
+        public static RLConsole mapConsole;
         private static readonly int  mapWidth = 100;
         private static readonly int  mapHeigth = 48;
 
@@ -36,6 +36,10 @@ namespace TestRL
         public static DungeonMap dungeonMap;
         public static Player player;
         public static Command cmd;
+
+        public static List<Fireball> spells = new List<Fireball>();
+
+        public static int time = 0;
 
         static void Main(string[] args)
         {
@@ -62,7 +66,7 @@ namespace TestRL
             statsConsole.Print(1, 1, "Stats", RLColor.White);
 
             MapGenerator mapGenerator = new MapGenerator(mapWidth, mapHeigth);
-            dungeonMap = mapGenerator.CreateCave(false);
+            dungeonMap = mapGenerator.CreateCave(true);
 
             cmd = new Command();
 
@@ -78,7 +82,16 @@ namespace TestRL
             RLKeyPress keyPress = rootConsole.Keyboard.GetKeyPress();
 
             if (keyPress != null)
-                cmd.MovePlayer(player, dungeonMap, keyPress.Key);
+            {
+                if (keyPress.Key == RLKey.Up || keyPress.Key == RLKey.Down || keyPress.Key == RLKey.Left || keyPress.Key == RLKey.Right)
+                {
+                    cmd.MovePlayer(player, dungeonMap, keyPress.Key);
+                }
+                else if (keyPress.Key == RLKey.W || keyPress.Key == RLKey.S || keyPress.Key == RLKey.A || keyPress.Key == RLKey.D)
+                {
+                    cmd.CastSpell(player, keyPress.Key);
+                }
+            }
         }
 
         private static void OnRootConsoleRender(object sender, UpdateEventArgs e)
@@ -90,6 +103,10 @@ namespace TestRL
             
             dungeonMap.Draw(mapConsole);
             player.Draw(mapConsole, dungeonMap);
+
+            if (spells.Count > 0)
+                spells.ForEach((f) => f.Draw());
+
             rootConsole.Draw();
         }
     }

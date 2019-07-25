@@ -18,6 +18,9 @@ namespace TestRL.Core
 
         public void Draw(RLConsole console, DungeonMap map)
         {
+            while (!map.IsWalkable(X, Y))
+                X++;
+
             console.Set(X, Y, color, RLColor.Black, symbol);
         }
     }

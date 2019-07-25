@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace TestRL.Core
 {
     class Command
@@ -13,6 +14,8 @@ namespace TestRL.Core
 
         public bool MovePlayer(Player player, DungeonMap dungeonMap, RLKey key)
         {
+            Game.time++;
+
             x = player.X;
             y = player.Y;
 
@@ -44,6 +47,29 @@ namespace TestRL.Core
 
 
             return dungeonMap.SetActorPosition(ref player, x, y);
+        }
+
+        public bool CastSpell(Player player, RLKey key)
+        {
+            int x = player.X;
+            int y = player.Y;
+            Tuple<int, int> d = null;
+
+            switch (key)
+            {
+                case RLKey.S: { y++; d = new Tuple<int, int>(0,1); break; }
+                case RLKey.W: { y--; d = new Tuple<int, int>(0,-1); break; }
+                case RLKey.D: { x++; d = new Tuple<int, int>(1,0); break; }
+                case RLKey.A: { x--; d = new Tuple<int, int>(-1,0); break; }
+            }
+
+            
+            Fireball fireball = new Fireball(x, y, d);
+            fireball.Draw();
+
+            Game.spells.Add(fireball);
+
+            return false;
         }
     }
 }
